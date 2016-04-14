@@ -1,5 +1,5 @@
 {
-  "name": "Healthy habits",
+  "name": "healthyHabits",
   "version": "1.0.0",
   "description": "An app to start and track your healthy habits",
   "main": "index.js",
