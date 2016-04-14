@@ -1,10 +1,10 @@
 {
-  "name": "hackathon-boilerplate",
+  "name": "Healthy habits",
   "version": "1.0.0",
-  "description": "Some boilerplate to get us off to a quick start at hackathons",
+  "description": "An app to start and track your healthy habits",
   "main": "index.js",
   "scripts": {
-    "nodemon": "nodemon backend/lib/server.js --exec babel-node --presets es2015,stage-1",
+    "start": "nodemon backend/lib/server.js --exec babel-node --presets es2015,stage-1",
     "server-build": "babel backend/lib -d backend/dist --presets es2015,stage-1",
     "production-serve": "node backend/dist/server.js",
     "dev": "webpack-dev-server --hot --inline --content-base public/",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andrewMacmurray/hackathon-boilerplate.git"
+    "url": "git+https://github.com/kasaromi/healthyhabits.git"
   },
   "author": "FAC7",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/andrewMacmurray/hackathon-boilerplate/issues"
+    "url": "https://github.com/kasaromi/healthyhabits/issues"
   },
-  "homepage": "https://github.com/andrewMacmurray/hackathon-boilerplate#readme",
+  "homepage": "https://github.com/kasaromi/healthyhabits#readme",
   "devDependencies": {
     "babel-cli": "^6.6.5",
     "babel-core": "^6.7.4",
