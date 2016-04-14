@@ -14,3 +14,21 @@ export const handleStart = (err) => {
     console.log('server listening on port: ' + server.info.port)
   }
 }
+
+export const handleRoute = (method, urlpath, replyPath, directory) => {
+  if (directory) {
+    return {
+      method: method,
+      path: urlpath,
+      handler: {directory: {path: replyPath}}
+    }
+  } else {
+    return {
+      method: method,
+      path: urlpath,
+      handler: (request, reply) => {
+        reply.file(replyPath)
+      }
+    }
+  }
+}
