@@ -1,5 +1,7 @@
 # Healthy Habits
 
+[![Join the chat at https://gitter.im/kasaromi/healthyhabits](https://badges.gitter.im/kasaromi/healthyhabits.svg)](https://gitter.im/kasaromi/healthyhabits?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Who?
 This app is created by the team Kasaromi, Ka - @katbow, sa - @shouston3, ro - @RobStallion and mi - @MyPitit at Founders and Coders.
 
