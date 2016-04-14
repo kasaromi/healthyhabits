@@ -1,15 +1,15 @@
 import client from './client.js'
-import Bluebird from 'bluebird'
+import bluebird from 'bluebird'
 
-client.LPUSH = Bluebird.promisify(client.LPUSH)
-client.LRANGE = Bluebird.promisify(client.LRANGE)
+client.lpush = bluebird.promisify(client.lpush)
+client.lrange = bluebird.promisify(client.lrange)
 
 // these are some dummy functions
 // make sure to delete these if you're done using them
 export const addDummyData = (data) => {
-  return client.LPUSH('myList', data)
+  return client.lpush('myList', data)
 }
 
 export const getDummyData = () => {
-  return client.LRANGE('myList', 0, -1)
+  return client.lrange('myList', 0, -1)
 }
