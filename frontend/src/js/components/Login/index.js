@@ -1,24 +1,37 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { checkUser } from '../../actions/'
 
+import {sayHello} from '../../actions/index.js'
 import LoginForm from './LoginForm.js'
 
-class Login extends Component {
+export default class Login extends Component {
   render () {
-    console.log(this.state)
+    console.log(this.props.thing)
     return (
       <div>
-        <LoginForm buttonName='Login' containerName='login-container' onClick={this.props.checkUser}/>
-        <LoginForm buttonName='Sign Up' containerName='signup-container' />
+        <LoginForm
+          buttonName='Login'
+          containerName='login-container'
+          handleClick={this.props.sayHello}
+        />
+        <LoginForm
+          buttonName='Sign Up'
+          containerName='signup-container'
+        />
       </div>
     )
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({checkUser}, dispatch)
+const mapStateToProps = state => {
+  return {
+    thing: state.thing
+  }
 }
 
-export default connect(null, mapDispatchToProps)(Login)
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({sayHello}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

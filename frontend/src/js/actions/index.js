@@ -1,11 +1,19 @@
 import axios from 'axios'
 
-export const checkUser = (user) => {
-  const url = '/checkUser'
-  // const request = axios.get(url)
+export const sayHello = () => {
+  const url = '/sayhello'
+  return axios.get(url)
+    .then(request => {
+      return Promise.resolve({
+        type: 'SAY_HELLO',
+        payload: request.data
+      })
+    })
+}
 
+export const checkUser = () => {
   return {
     type: 'CHECK_USER',
-    payload: 'hi'
+    payload: 'hilow'
   }
 }

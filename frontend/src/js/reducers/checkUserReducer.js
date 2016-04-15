@@ -1,6 +1,8 @@
 export default (state = null, action) => {
   switch (action.type) {
-    case 'CHECK_USER':
-      return action.payload
+  case 'SAY_HELLO':
+    return action.payload
+  default:
+    return state
   }
 }
