@@ -1,6 +1,6 @@
-export const getAllUsers = (client, callback) => {
-  client.hgetallAsync('users')
-    .then((res) => {
-      callback(res)
+export const getAllUsers = (client) => {
+  return client.hgetallAsync('users')
+}
+
     })
 }
