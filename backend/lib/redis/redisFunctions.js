@@ -14,5 +14,11 @@ export const getUserHabits = (client, username) => {
     })
 }
 
+export const checkUsernameAvalibility = (client, username) => {
+  return client.hgetallAsync('users')
+    .then(data => {
+      const userNames = Object.keys(data)
+      const isAvaliable = username.indexOf(userNames) === -1
+      return Promise.resolve(isAvaliable)
     })
 }
