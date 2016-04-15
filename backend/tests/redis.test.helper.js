@@ -5,7 +5,7 @@ const setNusers = (client, arr, callback) => {
       habits: []
     }))
     .then(() => {
-      if (i === arr.length-1) {
+      if (i === arr.length - 1) {
         callback()
       }
     })
