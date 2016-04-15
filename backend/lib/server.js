@@ -11,7 +11,7 @@ import { handlePlugins, handleStart, handleRoute } from './helpers/server-helper
 import Inert from 'inert'
 
 const ConnectionSettings = { port, routes: {cors: true} }
-const Plugins = [ Inert ]
+const Plugins = [Inert]
 
 const Routes = [
   handleRoute('GET', '/img/{imageUrl*}', './public/img', 'directory'),
