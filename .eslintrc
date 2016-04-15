@@ -99,7 +99,7 @@
     "no-path-concat": 2,
     "no-process-exit": 2,
 
-    "array-bracket-spacing": [2, "always"],
+    "array-bracket-spacing": [2, "never"],
     "block-spacing": [2, "never"],
     "brace-style": [2, "1tbs", { "allowSingleLine": true }],
     "camelcase": 2,

@@ -7,7 +7,7 @@ const styles = {
 }
 const repoLink = 'https://github.com/foundersandcoders'
 
-export default (props) => {
+export default () => {
   return (
     <Grid style={styles}>
       <Row>

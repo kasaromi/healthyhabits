@@ -12,9 +12,10 @@ export default class Header extends React.Component {
     return (
       <Navbar
         expanded={this.state.menuOpen}
-        onToggle={() => { this.setState({ menuOpen: !this.state.menuOpen }) }}
+        onToggle={() => {this.setState({ menuOpen: !this.state.menuOpen })}}
         className='top-menu'
-        fixedTop={true}>
+        fixedTop={true}
+      >
         <Navbar.Header>
           <Navbar.Brand>
             <Link to={'/'}>
@@ -27,9 +28,10 @@ export default class Header extends React.Component {
           <Nav pullRight>
             {this.props.menuItems.map(item => {
               return (
-                <li onClick={() => { this.setState({ menuOpen: false }) }}
-                    role='presentation'
-                    key={item + '-li'}>
+                <li onClick={() => {this.setState({ menuOpen: false })}}
+                  role='presentation'
+                  key={item + '-li'}
+                >
                   <Link key={item} to={'/' + item}>{item}</Link>
                 </li>
               )
