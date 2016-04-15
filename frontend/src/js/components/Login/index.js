@@ -1,24 +1,24 @@
 import React, { Component } from 'react'
-import { Grid, Row, Col } from 'react-bootstrap'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { checkUser } from '../../actions/'
 
+import LoginForm from './LoginForm.js'
 
-export default class Login extends Component {
+class Login extends Component {
   render () {
+    console.log(this.state)
     return (
       <div>
-        <div className='login-container'>
-          <h2>Login</h2>
-          <input type='text' name='username' placeholder='username'/>
-          <input type='password' name='password' placeholder='password'/>
-          <button type='submit'>Login</button>
-        </div>
-        <div className='signup-container'>
-          <h2>Sign Up</h2>
-          <input type='text' name='username' placeholder='username'/>
-          <input type='password' name='password' placeholder='password'/>
-          <button type='submit'>Sign Up</button>
-        </div>
+        <LoginForm buttonName='Login' containerName='login-container' onClick={this.props.checkUser}/>
+        <LoginForm buttonName='Sign Up' containerName='signup-container' />
       </div>
     )
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({checkUser}, dispatch)
+}
+
+export default connect(null, mapDispatchToProps)(Login)
