@@ -1,7 +1,9 @@
 # Healthy Habits
 
+[![Join the chat at https://gitter.im/kasaromi/healthyhabits](https://badges.gitter.im/kasaromi/healthyhabits.svg)](https://gitter.im/kasaromi/healthyhabits?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Who?
-This app is created by the team Kasaromi, Ka - @katbow, sa - @shouston3, ro - @RobStallion and mi - @MyPitit at Founders and Coders.
+This app is created by the team Kasaromi, Ka - @katbow, sa - @shouston3, ro - @RobStallion and vi - @Virginie-T at Founders and Coders.
 
 ## What? 
 Situation: Preventative care is one of the key focuses of the NHS over the next years. There are multiple venues (physical or virtual) that enable people to both know what's good for them in terms of looking after their health ("best practices" - how to quit smoking, exercise more, drink less, practice mindfulness etc), and multiple venues through which to carry out or monitor progress on said best practices (gyms, endomondo, headspace, etc).
