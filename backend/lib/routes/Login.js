@@ -19,7 +19,7 @@ export default {
         console.log('>>>', dataToSend, '<<<')
         const jwToken = jwt.sign(dataToSend, JWT_SECRET)
         request.cookieAuth.set({'twitterCookie': jwToken})
-        reply.redirect('/').state('reactCookie', 'user-logged-in')
+        reply.redirect('/habits').state('reactCookie', 'user-logged-in')
       }
     }
   }
