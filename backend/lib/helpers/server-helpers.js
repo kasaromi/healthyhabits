@@ -15,12 +15,20 @@ export const handleStart = (err) => {
   }
 }
 
-export const handleRoute = (method, urlpath, replyPath, directory) => {
-  if (directory) {
+export const handleRoute = (method, urlpath, replyPath, handler) => {
+  if (handler === 'directory') {
     return {
       method: method,
       path: urlpath,
       handler: {directory: {path: replyPath}}
+    }
+  } else if (handler === 'reply') {
+    return {
+      method: method,
+      path: urlpath,
+      handler: (request, reply) => {
+        reply(replyPath)
+      }
     }
   } else {
     return {

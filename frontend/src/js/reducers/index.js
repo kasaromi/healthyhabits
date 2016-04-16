@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
+import CheckUserReducer from './checkUserReducer.js'
 
 export default combineReducers({
-  state: (state = {}) => state
+  thing: CheckUserReducer
 })

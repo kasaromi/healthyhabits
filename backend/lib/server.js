@@ -15,6 +15,7 @@ const Plugins = [Inert]
 
 const Routes = [
   handleRoute('GET', '/img/{imageUrl*}', './public/img', 'directory'),
+  handleRoute('GET', '/sayhello', 'getAllUsersToComeAsAnArray', 'reply'),
   handleRoute('GET', '/app.js', './public/app.js'),
   handleRoute('GET', '/{param*}', './public/index.html')
 ]
