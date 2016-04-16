@@ -7,8 +7,9 @@ const port = process.env.PORT || 4000
 import { handlePlugins, handleStart, handleRoute } from './helpers/server-helpers.js'
 import client from './redis/client.js'
 import { checkUsernameAvalibility } from './redis/redisFunctions.js'
-import Login from './routes/Login.js'
 import { TwitterCookie, TwitterOauth } from './authStrategies/twitterAuthStrategies.js'
+import Login from './routes/Login.js'
+import userDetails from './routes/userDetails.js'
 
 import Bell from 'bell'
 import AuthCookie from 'hapi-auth-cookie'
@@ -24,23 +25,7 @@ const Routes = [
   handleRoute('GET', '/img/{imageUrl*}', {directory: {path: './public/img'}}),
   handleRoute('GET', '/sayhello', (req, reply) => {reply('theResponse')}),
   handleRoute('GET', '/app.js', (req, reply) => {reply.file('./public/app.js')}),
-  {
-    method: 'GET',
-    path: '/user-details',
-    config: {
-      auth: 'session',
-      handler: (request, reply) => {
-        console.log(request.auth.credentials)
-        const decodedData = jwt.verify(request.auth.credentials['twitterCookie'], JWT_SECRET)
-        console.log(decodedData, decodedData.screenName)
-        reply.redirect('/')
-        // reply({
-        //   screenName: decodedData.screenName,
-        //   profileImg: decodedData.profile_image_url
-        // })
-      }
-    }
-  },
+  userDetails,
   Login,
   handleRoute('GET', '/{param*}', (req, reply) => {reply.file('./public/index.html')})
 ]
