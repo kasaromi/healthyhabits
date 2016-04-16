@@ -15,28 +15,10 @@ export const handleStart = (err) => {
   }
 }
 
-export const handleRoute = (method, urlpath, replyPath, handler) => {
-  if (handler === 'directory') {
-    return {
-      method: method,
-      path: urlpath,
-      handler: {directory: {path: replyPath}}
-    }
-  } else if (handler === 'reply') {
-    return {
-      method: method,
-      path: urlpath,
-      handler: (request, reply) => {
-        reply(replyPath)
-      }
-    }
-  } else {
-    return {
-      method: method,
-      path: urlpath,
-      handler: (request, reply) => {
-        reply.file(replyPath)
-      }
-    }
+export const handleRoute = (method, urlpath, handler) => {
+  return {
+    method: method,
+    path: urlpath,
+    handler: handler
   }
 }
