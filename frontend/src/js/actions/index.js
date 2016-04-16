@@ -18,12 +18,12 @@ export const checkUser = () => {
   }
 }
 
-export const addNewHabit = () => {
-  const url = '/addNewHabit'
-  return axios.post(url)
+export const addNewAction = input => {
+  const url = '/addNewAction'
+  return axios.post(url, input)
     .then(request => {
       return Promise.resolve({
-        type: 'ADD_HABIT',
+        type: 'ADD_ACTION',
         payload: request.data
       })
     })

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import Header from './Header/index.js'
 import Footer from './Footer/index.js'
 
