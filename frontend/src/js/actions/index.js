@@ -17,3 +17,14 @@ export const checkUser = () => {
     payload: 'hilow'
   }
 }
+
+export const addNewHabit = () => {
+  const url = '/addNewHabit'
+  return axios.post(url)
+    .then(request => {
+      return Promise.resolve({
+        type: 'ADD_HABIT',
+        payload: request.data
+      })
+    })
+}
