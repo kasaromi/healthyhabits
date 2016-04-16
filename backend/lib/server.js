@@ -7,11 +7,14 @@ const port = process.env.PORT || 4000
 import { handlePlugins, handleStart, handleRoute } from './helpers/server-helpers.js'
 import client from './redis/client.js'
 import { checkUsernameAvalibility } from './redis/redisFunctions.js'
+import Login from './routes/Login.js'
 
+import Bell from 'bell'
+import AuthCookie from 'hapi-auth-cookie'
 import Inert from 'inert'
 
 const ConnectionSettings = { port, routes: {cors: true} }
-const Plugins = [Inert]
+const Plugins = [Inert, Bell, AuthCookie]
 
 const Routes = [
   handleRoute('GET', '/img/{imageUrl*}', {directory: {path: './public/img'}}),
@@ -21,11 +24,16 @@ const Routes = [
     console.log(req.payload)
     reply(checkUsernameAvalibility(client(), req.payload))
   }),
-  handleRoute('GET', '/{param*}', (req, reply) => {reply.file('./public/index.html')})
+  handleRoute('GET', '/{param*}', (req, reply) => {reply.file('./public/index.html')}),
+  Login
 ]
+
+import { TwitterCookie, TwitterOauth } from './authStrategies/twitterAuthStrategies.js'
 
 server.connection(ConnectionSettings)
 server.register(Plugins, handlePlugins)
+server.auth.strategy('twitter', 'bell', TwitterOauth)
+server.auth.strategy('session', 'cookie', TwitterCookie)
 server.route(Routes)
 server.start(handleStart)
 

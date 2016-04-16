@@ -15,10 +15,6 @@ export default class Login extends Component {
           containerName='login-container'
           handleClick={this.props.sayHello}
         />
-        <LoginForm
-          buttonName='Sign Up'
-          containerName='signup-container'
-        />
       </div>
     )
   }
