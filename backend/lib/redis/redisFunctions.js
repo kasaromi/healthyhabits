@@ -1,20 +1,25 @@
-export const checkUsernameAvalibility = (client, username) => {
+export const getAllUsers = (client) => {
   return client.hgetallAsync('users')
-  .then(data => {
-    const userNames = Object.keys(data)
-    const isAvaliable = username.indexOf(userNames) === -1
-    return Promise.resolve(isAvaliable)
-  })
 }
 
-export const storeUser = (client, username, data) => {
-  return client.hsetAsync('users', username, data)
+export const storeUser = (client, username, action) => {
+  return client.hsetAsync('users', username, action)
 }
 
-export const getUserHabits = (client, username) => {
+export const getUserActions = (client, username) => {
   return client.hgetAsync('users', username)
     .then(data => {
-      const habits = JSON.parse(data).habits
+      const habits = JSON.parse(data).actions
       return Promise.resolve(habits)
+    })
+}
+
+export const addNewAction = (client, username, action) => {
+  return client.hgetAsync('users', username)
+    .then(data => {
+      const initActions = JSON.parse(data).actions
+      const newActions = initActions.concat(action)
+      const strnewActions = JSON.stringify(newActions)
+      client.hsetAsync('users', username, strnewActions)
     })
 }
