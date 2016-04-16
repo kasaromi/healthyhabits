@@ -72,3 +72,24 @@ test('addNewAction adds a new action to the array of existing actions', (t) => {
     })
   })
 })
+
+test('completeAction changes completed from false to true for specific action', (t) => {
+  client.hsetAsync('users', 'SamStallion', JSON.stringify({
+    actions: [{
+      action: 'coding',
+      completed: false}]
+  }))
+  .then(() => {
+    db.completeAction(client, 'SamStallion', 'coding')
+    .then(() => {
+      client.hgetAsync('users', 'SamStallion')
+        .then(data => {
+          const results = JSON.parse(data)
+          t.deepEqual(results, [{
+            action: 'coding',
+            completed: true}])
+          t.end()
+        })
+    })
+  })
+})
