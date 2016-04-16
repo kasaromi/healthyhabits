@@ -8,8 +8,8 @@ import Rewards from './components/Rewards/'
 
 export default (
   <Route path='/' component={App}>
+    <IndexRoute component={Habits} />
     <Route path='/login' component={Login} />
-    <Route path='/habits' component={Habits} />
     <Route path='/rewards' component={Rewards} />
   </Route>
 )
