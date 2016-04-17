@@ -15,7 +15,7 @@ class Habits extends Component {
     return (
       <div>
         <ul>
-        {this.props.habits.habits.map((n, i) => {
+        {this.props.habits.map((n, i) => {
           return (
             <li
               key={i}
@@ -41,6 +41,8 @@ class Habits extends Component {
     )
   }
 }
+
+
 
 const mapStateToProps = state => {
   return {

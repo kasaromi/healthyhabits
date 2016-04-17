@@ -20,7 +20,7 @@ export const addNewAction = (client, username, action) => {
   return client.hgetAsync('users', username)
   .then(data => {
     const initActions = JSON.parse(data)
-    const newActions = initActions.concat(action)
+    const newActions = !initActions ? [action] : initActions.concat(action)
     const strnewActions = JSON.stringify(newActions)
     return client.hsetAsync('users', username, strnewActions)
   })
