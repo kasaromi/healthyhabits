@@ -56,20 +56,60 @@ test('getUserActions gets habits of user as an array', (t) => {
   })
 })
 
-test('addNewAction adds a new action to the array of existing actions', (t) => {
-  client.hsetAsync('users', 'SamStallion', JSON.stringify({
-    actions: ['coding', 'running']
-  }))
+// test('addNewAction adds a new action to the array of existing actions', (t) => {
+//   client.hsetAsync('users', 'SamStallion', JSON.stringify({
+//     actions: ['coding', 'running']
+//   }))
+//   .then(() => {
+//     db.addNewAction(client, 'SamStallion', 'swimming')
+//     .then(() => {
+//       client.hgetAsync('users', 'SamStallion')
+//         .then(data => {
+//           const results = JSON.parse(data)
+//           t.deepEqual(results, ['coding', 'running', 'swimming'])
+//           t.end()
+//         })
+//     })
+//   })
+// })
+
+test('addNewAction adds a new action to the array of existing actions and returns user actions afterwards', (t) => {
+  client.hsetAsync('users', 'SamStallion', JSON.stringify([{
+    habitName: 'swimming',
+    previousDates: [{d100000: true}, {d100000: false}],
+    friendNo: '+44...',
+    friendName: 'Rob',
+    startDate: '10000'
+  }]))
   .then(() => {
-    db.addNewAction(client, 'SamStallion', 'swimming')
-    .then(() => {
-      client.hgetAsync('users', 'SamStallion')
-        .then(data => {
-          const results = JSON.parse(data)
-          t.deepEqual(results, ['coding', 'running', 'swimming'])
-          t.end()
-        })
-    })
+    return db.addNewAction(client, 'SamStallion', {
+      habitName: 'coding',
+      previousDates: [{d100000: true}, {d100000: true}],
+      friendNo: '+44...',
+      friendName: 'Kat',
+      startDate: '20000'
+  })
+  .then((data) => {
+    console.log('DATA->>>>>>', data, 'TYPE', typeof data)
+    const results = (data)
+    t.deepEqual(results, [
+      {
+        habitName: 'swimming',
+        previousDates: [{d100000: true}, {d100000: false}],
+        friendNo: '+44...',
+        friendName: 'Rob',
+        startDate: '10000'
+      },
+      {
+        habitName: 'coding',
+        previousDates: [{d100000: true}, {d100000: true}],
+        friendNo: '+44...',
+        friendName: 'Kat',
+        startDate: '20000'
+      }
+    ], 'THEY ARE THE SAME')
+    t.end()
+  })
   })
 })
 
