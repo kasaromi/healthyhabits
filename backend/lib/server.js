@@ -1,4 +1,5 @@
 require('env2')('./config.env')
+const messageBird = require ('messageBird')(process.env.API_KEY)
 
 import Hapi from 'hapi'
 const server = new Hapi.Server()
@@ -39,6 +40,59 @@ const Routes = [
       // const answer = addNewAction(client(), req.payload.user, JSON.stringify(req.payload.habit))
       // console.log(answer)
       // reply(answer)
+    }
+  }, {
+    method: 'GET',
+    path: '/sendText',
+    handler: (req, reply) => {
+      var params = {
+        'originator': '+447860039046',
+        'recipients': [
+          '00447590490239'
+        ],
+        'body': 'Bazinga!!'
+      }
+
+      messageBird.messages.create(params, (err, response) => {
+        (err) ? console.log(err) : console.log(response);
+      })
+      reply('BAZINGAAAA')
+    }
+  }, {
+    method: 'GET',
+    path: '/sponsorsValidation',
+    handler: (req, reply) => {
+      var params = {
+        'originator': '+447860039046',
+        'recipients': [
+          '00447590490239'
+        ],
+      }
+      let receivedTexts
+      const callMbird = (cb) => {
+        messageBird.messages.read('', (err, response) => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('START HEREEEE', response.items, 'END HEREEEE');
+          const allTexts = response.items
+          receivedTexts = allTexts.filter((text) =>
+            text.direction === 'mo'
+          )
+        }
+        cb()
+      })}
+      const run = () => {
+        const refinedTexts = receivedTexts.map(text => {
+          return {
+            message: text.body,
+            sponsor: text.originator,
+            time: text.createdDatetime
+          }
+        })
+        reply(refinedTexts)
+      }
+      callMbird(run)
     }
   },
   handleRoute('GET', '/{param*}', (req, reply) => {reply.file('./public/index.html')})
