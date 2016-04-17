@@ -38,3 +38,17 @@ export const addNewAction = (input1, input2, input3) => {
       })
     })
 }
+
+export const getUserActions = () => {
+  const username = document.cookie.split('=')[1]
+  const toSend = {}
+  toSend.user = username
+  const url = '/getUserActions'
+  return axios.post(url, toSend)
+  .then(response => {
+    return Promise.resolve({
+      type: 'LOAD_ACTIONS',
+      payload: response.data
+    })
+  })
+}

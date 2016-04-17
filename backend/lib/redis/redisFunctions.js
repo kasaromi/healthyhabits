@@ -9,7 +9,7 @@ export const storeUser = (client, username, action) => {
 export const getUserActions = (client, username) => {
   return client.hgetAsync('users', username)
   .then(data => {
-    const habits = JSON.parse(data).actions
+    const habits = JSON.parse(data)
     return Promise.resolve(habits)
   })
 }

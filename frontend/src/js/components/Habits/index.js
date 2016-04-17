@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import HabitsForm from '../HabitsForm/index.js'
+import { bindActionCreators } from 'redux'
+import { getUserActions } from '../../actions/index.js'
 
 class Habits extends Component {
+  componentDidMount () {
+    this.props.getUserActions()
+  }
   render () {
     if (!this.props.habits) {
       return (
@@ -46,8 +51,13 @@ class Habits extends Component {
 
 const mapStateToProps = state => {
   return {
-    habits: state.habits
+    habits: state.habits,
+    getUserActions: state.getUserActions
   }
 }
 
-export default connect(mapStateToProps)(Habits)
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({getUserActions}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Habits)

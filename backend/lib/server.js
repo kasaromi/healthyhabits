@@ -7,7 +7,7 @@ const port = process.env.PORT || 4000
 
 import { handlePlugins, handleStart, handleRoute } from './helpers/server-helpers.js'
 import client from './redis/client.js'
-import {addNewAction} from './redis/redisFunctions.js'
+import {addNewAction, getUserActions} from './redis/redisFunctions.js'
 import { TwitterCookie, TwitterOauth } from './authStrategies/twitterAuthStrategies.js'
 import Login from './routes/Login.js'
 import userDetails from './routes/userDetails.js'
@@ -33,18 +33,20 @@ const Routes = [
       addNewAction(client(), req.payload.user, JSON.stringify(req.payload.habit))
       .then(info => {
         const newInfo = info.map(j => JSON.parse(j))
-        console.log(newInfo)
         reply(newInfo)
       })
-      console.log('-----------------------------------------')
-      // const hardcoded = {
-      //   habits: [
-      //     {habit: 'jogging', completed: ['yes', 'no', 'yes']},
-      //     {habit: 'running', completed: ['yes', 'yes']},
-      //   ]
-      // }
-      // console.log(answer)
-      // reply(answer)
+    }
+  },
+  {
+    method: 'POST',
+    path: '/getUserActions',
+    handler: (req, reply) => {
+      getUserActions(client(), req.payload.user)
+      .then(info => {
+        const newInfo = info.map(j => JSON.parse(j))
+        const newNewInfo = newInfo.map(el => el.habit)
+        reply(newNewInfo)
+      })
     }
   }, {
     method: 'GET',
