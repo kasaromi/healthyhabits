@@ -15,6 +15,8 @@ export const getUserActions = (client, username) => {
 }
 
 export const addNewAction = (client, username, action) => {
+  console.log(username, 'USERNAME')
+  console.log(typeof action, 'ACTION')
   return client.hgetAsync('users', username)
   .then(data => {
     const initActions = JSON.parse(data)

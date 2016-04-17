@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import CheckUserReducer from './checkUserReducer.js'
+import addActionReducer from './addActionReducer.js'
 
 export default combineReducers({
-  thing: CheckUserReducer
+  habits: addActionReducer
 })

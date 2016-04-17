@@ -18,13 +18,22 @@ export const checkUser = () => {
   }
 }
 
-export const addNewHabit = () => {
-  const url = '/addNewHabit'
-  return axios.post(url)
-    .then(request => {
+export const addNewAction = (input1, input2, input3) => {
+  const toSend = {}
+  const username = document.cookie.split('=')[1]
+  const inputObj = {}
+  inputObj.habit = input1
+  inputObj.friendName = input2
+  inputObj.friendNumber = input3
+  toSend.user = username
+  toSend.habit = inputObj
+  console.log(toSend, '--toSend---')
+  const url = '/addNewAction'
+  return axios.post(url, JSON.stringify(toSend))
+    .then(response => {
       return Promise.resolve({
-        type: 'ADD_HABIT',
-        payload: request.data
+        type: 'ADD_ACTION',
+        payload: response.data
       })
     })
 }
