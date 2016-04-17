@@ -27,12 +27,12 @@ class HabitsForm extends Component {
               type='text'
               ref={node => {input1 = node}}
             /> <br />
-            <label htmlFor='sponsor-name'>Sponsor's Name:</label>
+            <label htmlFor='sponsor-name'>Sponsor Name:</label>
             <input name='sponsor-name'
               type='text'
               ref={node => {input2 = node}}
             /> <br />
-            <label htmlFor='sponsor-number'>Sponsor's Number:</label>
+            <label htmlFor='sponsor-number'>Sponsor Number:</label>
             <input name='sponsor-number'
               type='text'
               ref={node => {input3 = node}}

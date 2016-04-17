@@ -25,11 +25,12 @@ export const addNewAction = (input1, input2, input3) => {
   inputObj.habit = input1
   inputObj.friendName = input2
   inputObj.friendNumber = input3
+  inputObj.completed = []
   toSend.user = username
   toSend.habit = inputObj
-  console.log(toSend, '--toSend---')
+  console.log(toSend, '--actionsfile---')
   const url = '/addNewAction'
-  return axios.post(url, JSON.stringify(toSend))
+  return axios.post(url, toSend)
     .then(response => {
       return Promise.resolve({
         type: 'ADD_ACTION',

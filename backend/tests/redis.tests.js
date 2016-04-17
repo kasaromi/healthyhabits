@@ -113,6 +113,30 @@ test('addNewAction adds a new action to the array of existing actions and return
   })
 })
 
+test('addNewAction works when the db is previously empty', (t) => {
+  return db.addNewAction(client, 'SamStallion', {
+    habitName: 'coding',
+    previousDates: [{d100000: true}, {d100000: true}],
+    friendNo: '+44...',
+    friendName: 'Kat',
+    startDate: '20000'
+  })
+  .then((data) => {
+    console.log('DATA->>>>>>', data, 'TYPE', typeof data)
+    const results = (data)
+    t.deepEqual(results, [
+      {
+        habitName: 'coding',
+        previousDates: [{d100000: true}, {d100000: true}],
+        friendNo: '+44...',
+        friendName: 'Kat',
+        startDate: '20000'
+      }
+    ], 'THEY ARE THE SAME')
+    t.end()
+  })
+})
+
 test('completeAction changes completed from false to true for specific action', (t) => {
   client.hsetAsync('users', 'SamStallion', JSON.stringify({
     actions: [{

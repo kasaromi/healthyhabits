@@ -28,15 +28,20 @@ const Routes = [
     method: 'POST',
     path: '/addNewAction',
     handler: (req, reply) => {
-      // console.log(JSON.stringify(req.payload.habit), '<<<<payload123')
-      const hardcoded = {
-        habits: [
-          {habit: 'swimming', completed: ['yes', 'no', 'yes']},
-          {habit: 'running', completed: ['yes', 'yes']},
-        ]
-      }
-      reply(JSON.stringify(hardcoded))
-      // const answer = addNewAction(client(), req.payload.user, JSON.stringify(req.payload.habit))
+      // console.log(req.payload.user, '<<<<payload123')
+      addNewAction(client(), req.payload.user, JSON.stringify(req.payload.habit))
+      .then(info => {
+        const newInfo = info.map(j => JSON.parse(j))
+        console.log(newInfo)
+        reply(newInfo)
+      })
+      console.log('-----------------------------------------')
+      // const hardcoded = {
+      //   habits: [
+      //     {habit: 'jogging', completed: ['yes', 'no', 'yes']},
+      //     {habit: 'running', completed: ['yes', 'yes']},
+      //   ]
+      // }
       // console.log(answer)
       // reply(answer)
     }
