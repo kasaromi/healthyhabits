@@ -15,12 +15,27 @@ export const getUserActions = (client, username) => {
 }
 
 export const addNewAction = (client, username, action) => {
+  console.log(username, 'USERNAME')
+  console.log(typeof action, 'ACTION')
   return client.hgetAsync('users', username)
     .then(data => {
-      const initActions = JSON.parse(data).actions
-      const newActions = initActions.concat(action)
-      const strnewActions = JSON.stringify(newActions)
-      client.hsetAsync('users', username, strnewActions)
+      if (data) {
+        console.log(data, 'DATA!!!')
+        const initActions = JSON.parse(data).actions
+        const newActions = initActions.concat(action)
+        const strnewActions = JSON.stringify(newActions)
+        return client.hsetAsync('users', username, JSON.stringify(strnewActions))
+      } else {
+        return client.hsetAsync('users', username, JSON.stringify(action))
+        .then(() => {
+          console.log('------log----')
+          return client.hgetAsync('users', username)
+          .then(d => {
+            console.log(d, '<<<<<data')
+            return Promise.resolve(d)
+          })
+        })
+      }
     })
 }
 

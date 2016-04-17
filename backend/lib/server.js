@@ -6,7 +6,7 @@ const port = process.env.PORT || 4000
 
 import { handlePlugins, handleStart, handleRoute } from './helpers/server-helpers.js'
 import client from './redis/client.js'
-import { checkUsernameAvalibility } from './redis/redisFunctions.js'
+import {addNewAction} from './redis/redisFunctions.js'
 import { TwitterCookie, TwitterOauth } from './authStrategies/twitterAuthStrategies.js'
 import Login from './routes/Login.js'
 import userDetails from './routes/userDetails.js'
@@ -14,9 +14,6 @@ import userDetails from './routes/userDetails.js'
 import Bell from 'bell'
 import AuthCookie from 'hapi-auth-cookie'
 import Inert from 'inert'
-
-const JWT_SECRET = process.env.JWT_SECRET
-import jwt from 'jsonwebtoken'
 
 const ConnectionSettings = { port, routes: {cors: true} }
 const Plugins = [Inert, Bell, AuthCookie]
@@ -27,6 +24,23 @@ const Routes = [
   handleRoute('GET', '/app.js', (req, reply) => {reply.file('./public/app.js')}),
   userDetails,
   Login,
+  {
+    method: 'POST',
+    path: '/addNewAction',
+    handler: (req, reply) => {
+      // console.log(JSON.stringify(req.payload.habit), '<<<<payload123')
+      const hardcoded = {
+        habits: [
+          {habit: 'swimming', completed: ['yes', 'no', 'yes']},
+          {habit: 'running', completed: ['yes', 'yes']},
+        ]
+      }
+      reply(JSON.stringify(hardcoded))
+      // const answer = addNewAction(client(), req.payload.user, JSON.stringify(req.payload.habit))
+      // console.log(answer)
+      // reply(answer)
+    }
+  },
   handleRoute('GET', '/{param*}', (req, reply) => {reply.file('./public/index.html')})
 ]
 
