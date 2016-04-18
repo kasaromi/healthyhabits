@@ -1,13 +1,13 @@
 require('env2')('./config.env')
-const messageBird = require ('messageBird')(process.env.API_KEY)
+const messageBird = require('messageBird')(process.env.API_KEY)
 
 import Hapi from 'hapi'
 const server = new Hapi.Server()
 const port = process.env.PORT || 4000
 
-import { handlePlugins, handleStart, handleRoute } from './helpers/server-helpers.js'
+import { handlePlugins, handleRoute } from './helpers/server-helpers.js'
 import client from './redis/client.js'
-import {addNewAction} from './redis/redisFunctions.js'
+import {addNewAction, completeAction } from './redis/redisFunctions.js'
 import { TwitterCookie, TwitterOauth } from './authStrategies/twitterAuthStrategies.js'
 import Login from './routes/Login.js'
 import userDetails from './routes/userDetails.js'
@@ -18,6 +18,9 @@ import Inert from 'inert'
 
 const ConnectionSettings = { port, routes: {cors: true} }
 const Plugins = [Inert, Bell, AuthCookie]
+
+let username
+let habit
 
 const Routes = [
   handleRoute('GET', '/img/{imageUrl*}', {directory: {path: './public/img'}}),
@@ -30,6 +33,8 @@ const Routes = [
     path: '/addNewAction',
     handler: (req, reply) => {
       // console.log(req.payload.user, '<<<<payload123')
+      username = req.payload.user
+      habit = req.payload.habit
       addNewAction(client(), req.payload.user, JSON.stringify(req.payload.habit))
       .then(info => {
         const newInfo = info.map(j => JSON.parse(j))
@@ -59,7 +64,7 @@ const Routes = [
       }
 
       messageBird.messages.create(params, (err, response) => {
-        (err) ? console.log(err) : console.log(response);
+        (err) ? console.log(err) : console.log(response)
       })
       reply('BAZINGAAAA')
     }
@@ -103,11 +108,33 @@ const Routes = [
   handleRoute('GET', '/{param*}', (req, reply) => {reply.file('./public/index.html')})
 ]
 
+const loggin = () => {
+  if(username){
+    console.log('working!')
+    client.hset('users', 'shouston33', JSON.stringify({
+      swimming
+    })
+  }
+}
+
+const handleStart = (err) => {
+
+  if (err) {
+    console.log('server error: ', err)
+  } else {
+
+    setInterval(loggin, 1000)
+    console.log('server listening on port: ' + server.info.port)
+  }
+}
+
 server.connection(ConnectionSettings)
 server.register(Plugins, handlePlugins)
 server.auth.strategy('twitter', 'bell', TwitterOauth)
 server.auth.strategy('session', 'cookie', TwitterCookie)
 server.route(Routes)
 server.start(handleStart)
+
+  // completeAction(client(), username, habit)))
 
 export default server

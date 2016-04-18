@@ -27,6 +27,7 @@ export const addNewAction = (client, username, action) => {
 }
 
 export const completeAction = (client, username, action) => {
+  console.log(action, '<<<ACTION')
   return client.hgetAsync('users', username)
   .then(data => {
     const parsed = JSON.parse(data).actions
