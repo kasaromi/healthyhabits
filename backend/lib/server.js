@@ -7,10 +7,12 @@ const port = process.env.PORT || 4000
 
 import { handlePlugins, handleRoute } from './helpers/server-helpers.js'
 import client from './redis/client.js'
-import {addNewAction, completeAction } from './redis/redisFunctions.js'
+// import {addNewAction, completeAction } from './redis/redisFunctions.js'
 import { TwitterCookie, TwitterOauth } from './authStrategies/twitterAuthStrategies.js'
 import Login from './routes/Login.js'
 import userDetails from './routes/userDetails.js'
+import sendText from './routes/sendText.js'
+import sponsorsValidation from './routes/sponsorsValidation.js'
 
 import Bell from 'bell'
 import AuthCookie from 'hapi-auth-cookie'
@@ -28,56 +30,10 @@ const Routes = [
   handleRoute('GET', '/app.js', (req, reply) => {reply.file('./public/app.js')}),
   userDetails,
   Login,
-  {
-    method: 'POST',
-    path: '/addNewAction',
-    handler: (req, reply) => {
-      // console.log(req.payload.user, '<<<<payload123')
-      username = req.payload.user
-      habit = req.payload.habit
-      addNewAction(client(), req.payload.user, JSON.stringify(req.payload.habit))
-      .then(info => {
-        const newInfo = info.map(j => JSON.parse(j))
-        console.log(newInfo)
-        reply(newInfo)
-      })
-      console.log('-----------------------------------------')
-      // const hardcoded = {
-      //   habits: [
-      //     {habit: 'jogging', completed: ['yes', 'no', 'yes']},
-      //     {habit: 'running', completed: ['yes', 'yes']},
-      //   ]
-      // }
-      // console.log(answer)
-      // reply(answer)
-    }
-  }, {
-    method: 'GET',
-    path: '/sendText',
-    handler: (req, reply) => {
-      var params = {
-        'originator': '+447860039046',
-        'recipients': [
-          '00447590490239'
-        ],
-        'body': 'Bazinga!!'
-      }
-
-      messageBird.messages.create(params, (err, response) => {
-        (err) ? console.log(err) : console.log(response)
-      })
-      reply('BAZINGAAAA')
-    }
-  }, {
+  sendText(), {
     method: 'GET',
     path: '/sponsorsValidation',
     handler: (req, reply) => {
-      var params = {
-        'originator': '+447860039046',
-        'recipients': [
-          '00447590490239'
-        ],
-      }
       let receivedTexts
       const callMbird = (cb) => {
         messageBird.messages.read('', (err, response) => {
@@ -109,11 +65,9 @@ const Routes = [
 ]
 
 const loggin = () => {
-  if(username){
+  if (username) {
     console.log('working!')
-    client.hset('users', 'shouston33', JSON.stringify({
-      swimming
-    })
+    client.hset('users', 'shouston33', JSON.stringify({ swimming: swimming }))
   }
 }
 

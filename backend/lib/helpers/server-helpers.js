@@ -1,5 +1,3 @@
-import server from '../server.js'
-
 export const handlePlugins = (err) => {
   if (err) {
     console.log('plugins error: ', err)
