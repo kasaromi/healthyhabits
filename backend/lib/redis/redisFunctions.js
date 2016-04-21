@@ -1,11 +1,3 @@
-export const getAllUsers = (client) => {
-  return client.hgetallAsync('users')
-}
-
-export const storeUser = (client, username, action) => {
-  return client.hsetAsync('users', username, action)
-}
-
 export const getUserActions = (client, username) => {
   return client.hgetAsync('users', username)
   .then(data => {

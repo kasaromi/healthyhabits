@@ -29,20 +29,6 @@ const test = tape({
   }
 })
 
-test('storeUser adds a new user with an empty habits array', (t) => {
-  db.storeUser(client, 'Robstallion', JSON.stringify({
-    actions: []
-  }))
-  .then(() => {
-    db.getAllUsers(client).then(data => {
-      const actual = Object.keys(data)[0]
-      const expected = 'Robstallion'
-      t.deepEqual(actual, expected, 'worked!')
-      t.end()
-    })
-  })
-})
-
 test('getUserActions gets habits of user as an array', (t) => {
   client.hsetAsync('users', 'SamStallion', JSON.stringify({
     actions: ['coding', 'running']
@@ -50,28 +36,11 @@ test('getUserActions gets habits of user as an array', (t) => {
   .then(() => {
     db.getUserActions(client, 'SamStallion')
     .then((results) => {
-      t.deepEqual(results, ['coding', 'running'])
+      t.deepEqual(results, {actions: ['coding', 'running']})
       t.end()
     })
   })
 })
-
-// test('addNewAction adds a new action to the array of existing actions', (t) => {
-//   client.hsetAsync('users', 'SamStallion', JSON.stringify({
-//     actions: ['coding', 'running']
-//   }))
-//   .then(() => {
-//     db.addNewAction(client, 'SamStallion', 'swimming')
-//     .then(() => {
-//       client.hgetAsync('users', 'SamStallion')
-//         .then(data => {
-//           const results = JSON.parse(data)
-//           t.deepEqual(results, ['coding', 'running', 'swimming'])
-//           t.end()
-//         })
-//     })
-//   })
-// })
 
 test('addNewAction adds a new action to the array of existing actions and returns user actions afterwards', (t) => {
   client.hsetAsync('users', 'SamStallion', JSON.stringify([{
@@ -90,7 +59,6 @@ test('addNewAction adds a new action to the array of existing actions and return
       startDate: '20000'
   })
   .then((data) => {
-    console.log('DATA->>>>>>', data, 'TYPE', typeof data)
     const results = (data)
     t.deepEqual(results, [
       {
@@ -122,7 +90,6 @@ test('addNewAction works when the db is previously empty', (t) => {
     startDate: '20000'
   })
   .then((data) => {
-    console.log('DATA->>>>>>', data, 'TYPE', typeof data)
     const results = (data)
     t.deepEqual(results, [
       {
