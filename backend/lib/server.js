@@ -29,7 +29,6 @@ const Routes = [
     method: 'POST',
     path: '/addNewAction',
     handler: (req, reply) => {
-      // console.log(req.payload.user, '<<<<payload123')
       addNewAction(client(), req.payload.user, JSON.stringify(req.payload.habit))
       .then(info => {
         const newInfo = info.map(j => JSON.parse(j))
