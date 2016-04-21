@@ -29,20 +29,33 @@ const test = tape({
   }
 })
 
-test('getUserActions gets habits of user as an array', (t) => {
-  client.hsetAsync('users', 'SamStallion', JSON.stringify({
-    actions: ['coding', 'running']
-  }))
+test('getUserHabits gets habits of user as an array', (t) => {
+  client.hsetAsync('users', 'SamStallion', JSON.stringify([
+    {
+      habit: 'swimming',
+      sponsor: 'rob',
+      sponsorNum: '65974439',
+      startDate: 1234567,
+      DaysCompleted: []
+    },
+    {
+      habit: 'running',
+      sponsor: 'kat',
+      sponsorNum: '12345678',
+      startDate: 1234568,
+      DaysCompleted: []
+    }
+  ]))
   .then(() => {
-    db.getUserActions(client, 'SamStallion')
+    db.getUserHabits(client, 'SamStallion')
     .then((results) => {
-      t.deepEqual(results, {actions: ['coding', 'running']})
+      t.deepEqual(results, {habits: ['coding', 'running']})
       t.end()
     })
   })
 })
 
-test('addNewAction adds a new action to the array of existing actions and returns user actions afterwards', (t) => {
+test('addNewHabit adds a new habit to the array of habits and returns user habits afterwards', (t) => {
   client.hsetAsync('users', 'SamStallion', JSON.stringify([{
     habitName: 'swimming',
     previousDates: [{d100000: true}, {d100000: false}],
@@ -51,13 +64,13 @@ test('addNewAction adds a new action to the array of existing actions and return
     startDate: '10000'
   }]))
   .then(() => {
-    return db.addNewAction(client, 'SamStallion', {
+    return db.addNewHabit(client, 'SamStallion', {
       habitName: 'coding',
       previousDates: [{d100000: true}, {d100000: true}],
       friendNo: '+44...',
       friendName: 'Kat',
       startDate: '20000'
-  })
+    })
   .then((data) => {
     const results = (data)
     t.deepEqual(results, [
@@ -81,8 +94,8 @@ test('addNewAction adds a new action to the array of existing actions and return
   })
 })
 
-test('addNewAction works when the db is previously empty', (t) => {
-  return db.addNewAction(client, 'SamStallion', {
+test('addNewHabit works when the db is previously empty', (t) => {
+  return db.addNewHabit(client, 'SamStallion', {
     habitName: 'coding',
     previousDates: [{d100000: true}, {d100000: true}],
     friendNo: '+44...',
@@ -104,20 +117,20 @@ test('addNewAction works when the db is previously empty', (t) => {
   })
 })
 
-test('completeAction changes completed from false to true for specific action', (t) => {
+test('completeHabit changes completed from false to true for specific habit', (t) => {
   client.hsetAsync('users', 'SamStallion', JSON.stringify({
-    actions: [{
-      action: 'coding',
+    habits: [{
+      habit: 'coding',
       completed: false}]
   }))
   .then(() => {
-    db.completeAction(client, 'SamStallion', 'coding')
+    db.completeHabit(client, 'SamStallion', 'coding')
     .then(() => {
       client.hgetAsync('users', 'SamStallion')
         .then(data => {
           const results = JSON.parse(data)
           t.deepEqual(results, [{
-            action: 'coding',
+            habit: 'coding',
             completed: true}])
           t.end()
         })
