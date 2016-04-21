@@ -110,7 +110,7 @@
     "indent": [2, 2],
     "jsx-quotes": [2, "prefer-single"],
     "key-spacing": [2, { "beforeColon": false, "afterColon": true, "mode": "strict" }],
-    "keyword-spacing": 2,
+    "keyword-spacing": 1,
     "max-depth": [2, 4],
     "max-len": [2, 110],
     "max-nested-callbacks": [2, 4],
