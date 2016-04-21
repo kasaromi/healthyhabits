@@ -43,6 +43,7 @@ const Routes = [
     handler: (req, reply) => {
       getUserActions(client(), req.payload.user)
       .then(info => {
+        console.log(info, '<====== ffeiogglernjgnlekgnkgl')
         const newInfo = info.map(j => JSON.parse(j))
         const newNewInfo = newInfo.map(el => el.habit)
         reply(newNewInfo)

@@ -28,7 +28,6 @@ export const addNewAction = (input1, input2, input3) => {
   inputObj.completed = []
   toSend.user = username
   toSend.habit = inputObj
-  console.log(toSend, '--actionsfile---')
   const url = '/addNewAction'
   return axios.post(url, toSend)
     .then(response => {
@@ -42,10 +41,13 @@ export const addNewAction = (input1, input2, input3) => {
 export const getUserActions = () => {
   const username = document.cookie.split('=')[1]
   const toSend = {}
+  const habitsArr = []
   toSend.user = username
+  toSend.habits = habitsArr
   const url = '/getUserActions'
   return axios.post(url, toSend)
   .then(response => {
+    console.log(response.data, '<-------response data over here')
     return Promise.resolve({
       type: 'LOAD_ACTIONS',
       payload: response.data
