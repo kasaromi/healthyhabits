@@ -1,5 +1,5 @@
 require('env2')('./config.env')
-const messageBird = require('messageBird')(process.env.API_KEY)
+const messageBird = require('messagebird')(process.env.API_KEY)
 
 import Hapi from 'hapi'
 const server = new Hapi.Server()
